@@ -1,0 +1,104 @@
+.fz(@name, @px){
+    @{name}: round(@px / 2) * 1px;
+    [data-dpr="2"] & {
+        @{name}: @px * 1px;
+    }
+    [data-dpr="2.5"] & {
+        @{name}: round(@px * 2.5 / 2) * 1px;
+    }
+    [data-dpr="2.75"] & {
+        @{name}: round(@px * 2.75 / 2) * 1px;
+    }
+    [data-dpr="3"] & {
+        @{name}: round(@px / 2 * 3) * 1px
+    }
+    [data-dpr="4"] & {
+        @{name}: @px * 2px;
+    }
+}
+
+/*@cl:#FB0036; section距离上方的距离*/
+@cl:#e4393c;
+
+/*** 缩略图 ***/
+.thumbnail_box(){
+  background-color: rgba(246, 246, 246,1);
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 0px;
+  overflow: hidden;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
+.thumbnail(){
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /*background-color: rgba(228, 228, 228, 0.8);*/
+  background-color: rgba(255, 255, 255, 1);
+  display: block;
+}
+.thumbnail_img(){
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 95%;
+  display: block;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+}
+.thumbnail_text(){
+  width: 100%;
+  text-align: center;
+  display: block;
+  line-height: 25px;
+  font-size: 14px;
+}
+/*** 缩略图 END ***/
+
+.pt() {
+  padding-top: 6vw;
+}
+.pb() {
+  padding-bottom: 10px;
+}
+.mt() {
+  margin-top: 3vw;
+}
+
+.mb() {
+  margin-bottom: 10px;
+}
+
+//上边框
+.bt(){
+  border-top-color: rgba(185, 185, 185, .14);
+  border-top-style: solid;
+  .fz(border-top-width,1);
+}
+// 下边框
+.bd(){
+  border-bottom-color: rgba(185, 185, 185, .14);
+  border-bottom-style: solid;
+  .fz(border-bottom-width,1);
+}
+
+/*** 图片居中 ***/
+.pic_centered_box(){
+    position: relative;
+    padding-top: 100%;
+    overflow: hidden;
+    width: 100%;
+    background-color: #f8f8f8;
+}
+.pic_centered_img(){
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 95%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+}
+/*** 图片居中 end ***/
+

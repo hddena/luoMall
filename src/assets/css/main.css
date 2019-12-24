@@ -1,0 +1,61 @@
+section:after ,aside:after , aside:after , p:after , li:after ,.title:after , dl:after , dt:after , dd:after{
+    clear: both;
+    display: table;
+    content: "";
+}
+
+
+/************************* app.vue  *************************/
+body{
+    /*background-color: #f0f3f6;*/
+    background-color: #f6f6f6;
+    /*box-shadow: 0 8px 12px #ebedf0;*/
+}
+#app {
+    width: 100%;
+    max-width: 720px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #e6e6e6;
+    font-size: 14px;
+}
+
+
+
+/************************* app.vue end *************************/
+
+.orderList .van-dialog__content{
+      max-height: 350px;
+      overflow: auto;
+}
+
+
+/************************* 横屏广告 *************************/
+.pic {
+    width: 94%;
+    padding: 3%;
+
+    overflow: hidden;
+}
+.pic .van-image{
+    max-height: 150px;
+    position: relative;
+    padding-top: 30%;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    background-color: #f8f8f8;
+}
+.pic .van-image img{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+
+}
+
+/************************* 横屏广告 end *************************/
