@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="index">
-    <v-topuser/>
+    <v-topuserinfo/>
     <v-search/>
     <!-- <a href="weixin://" οnclick="PIWI_SUBMIT.Weixin_Open()">点击跳转到微信</a> -->
     <v-swipe/>
@@ -41,7 +41,7 @@
 <script>
   
 import Util from '../util/common.js'
-import TopUser from '@/common/TopUser'
+import TopUserInfo from '@/common/TopUserInfo'
 import Search from '@/common/Search'
 import Swipe from '@/components/index/Swipe'
 import ServiceIcon from '@/components/index/ServiceIcon'
@@ -53,7 +53,7 @@ import Tabbar from '@/common/Tabbar'
 
 export default {
   components: {
-    'v-topuser': TopUser,
+    'v-topuserinfo': TopUserInfo,
     'v-search': Search,
     'v-swipe': Swipe,
     'v-serviceicon': ServiceIcon,

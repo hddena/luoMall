@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<!-- https://blog.csdn.net/yx_cos/article/details/82499389 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>选择规格</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@1.4/lib/index.css">
+
+<style type="text/css">
+
+</style>
+
+</head>
+<body>
+<div id='vmsimulatedDATA'>
+ <div class="sortItem" v-for="(item,index) in attrAndValuees" :key="item.attrId">
+      <span>{{item.attrName}}:</span>
+      <ul>
+        <li v-for="(itemm,ind) in item.valuees" :key="itemm.attrId" :class="{'cur':sel[index] == ind}" @click="select(index,ind)" class="hand" >{{itemm.value}}</li>
+      </ul>
+    </div>
+</div>
+
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!-- 引入组件 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vant@1.4/lib/vant.min.js"></script>
+<script type="text/javascript">
+var vmsimulatedDATA = new Vue({
+    el: "#vmsimulatedDATA",
+    data: {
+        sel: [], //是否选中 因为不确定是多规格还是但规格，所以这里定义数组来判断
+        attrAndValuees: [
+            {
+              'attrId': 1,
+              'attrName': '味道',
+              'valuees': [
+                {
+                  'attrId': 1,
+                  'value': '橘子味'
+                },
+                {
+                  'attrId': 2,
+                  'value': '草莓味'
+                }
+              ]
+            },
+            {
+              'attrId': 2,
+              'attrName': '容量',
+              'valuees': [
+                {
+                  'attrId': 4,
+                  'value': '100ml'
+                },
+                {
+                  'attrId': 6,
+                  'value': '300ml'
+                }
+              ]
+            }
+        ]
+    },
+    created: function () {
+
+    },
+    mounted: function () {
+ 
+    },
+    methods: {
+        select: function (index, ind) {
+              this.sel[index] = ind; 
+              this.$set(this.sel, index, ind)
+              // this.sel = this.sel.concat([]); 
+              
+        },
+ 
+    }
+})
+
+</script>
+</html>

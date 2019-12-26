@@ -2,7 +2,7 @@
   <div class="parameter" v-if="parameter">
     <van-cell-group>
       <van-cell>
-        <div class="goods-title">{{ goods.pname }}</div>
+        <div class="goods-title">{{ goods.pname }} || {{ goods.cname }}</div>
         <div class="goods-price">
             <!-- 有会员信息、有选参数、默认价格变成数组的情况下才会显示以下信息 -->
             <p v-if="userInfo && selectArr.length ">

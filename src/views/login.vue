@@ -125,7 +125,6 @@ export default {
           //this.buyear = response.data.data;
           //console.log(response);
           console.log('login:'+response.data.msg);
-
           if (response.data.ret == 1) {
             //Util.setEffectiveTime('userInfo',response.data.data);
             //console.log(response.data.data);

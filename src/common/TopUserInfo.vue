@@ -26,7 +26,13 @@ export default {
       let t = this;
       t.$nextTick(function() {
           t.getLocalUserInfo(); 
+          console.log(this.userInfoFn);
       });
+  },
+  computed: {
+    userInfoFn () {
+      return this.$store.state.login.userInfo
+    },
   },
   methods: {
     getLocalUserInfo() {
