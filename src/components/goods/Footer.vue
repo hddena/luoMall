@@ -2,12 +2,12 @@
   <div class="footer">
     <van-goods-action>
       <van-goods-action-icon icon="home-o" text="首页"  @click="goHome"/>
-      <van-goods-action-icon icon="chat-o" text="客服" @click="sorry"/>
+      <van-goods-action-icon icon="chat-o" text="客服" @click="kefu"/>
       <van-goods-action-icon icon="cart-o" text="购物车" @click="onClickCart" :info="count"/>
       <van-goods-action-button type="warning" @click="addIntoCar">
         加入购物车
       </van-goods-action-button>
-      <van-goods-action-button type="danger" @click="sorry">
+      <van-goods-action-button type="danger" @click="onBuy">
         立即购买
       </van-goods-action-button>
     </van-goods-action>
@@ -144,6 +144,14 @@ export default {
       .catch(function(error) {
         console.log(error)
       })
+    },
+    kefu(){
+      window.open("tel:13570859899");
+    },
+    onBuy(){ 
+      //console.log('showSku 显示状态');
+      this.$router.push('/cart');
+      //this.showState = true;
     },
     goHome() {
       this.$router.push('/');

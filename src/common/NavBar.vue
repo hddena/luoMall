@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="NavBar">
+  <div class="navBar">
     <van-nav-bar
       :title="$route.name"
       left-text="返回"
@@ -48,7 +48,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.tabbar{
+.navBar{
+  //border-bottom: 1px solid #d7d7d7;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,.12);
   .van-tabbar{
     -webkit-box-shadow: 0 -1px 8px rgba(0,1,1,.08);
     box-shadow: 0 -1px 8px rgba(0,1,1,.08);

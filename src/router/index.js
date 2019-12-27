@@ -23,7 +23,8 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import updateMember from '@/views/updateMember'
 import SearchPage from '@/views/SearchPage'
-
+import News from '@/views/News'
+import NewsDetail from '@/views/NewsDetail'
 
 /*
 //按需加载,当渲染其他页面时才加载其组件,并缓存,减少首屏加载时间
@@ -73,6 +74,16 @@ scrollBehavior (to, from, savedPosition) { // 路由跳转到新页面置顶
       path: '/GoodsDetail/:pid',
       name: '商品详情',
       component: GoodsDetail
+    },
+    {
+      path: '/News',
+      name: '资讯列表',
+      component: News
+    },
+    {
+      path: '/NewsDetail/:id',
+      name: '资讯详情',
+      component: NewsDetail
     },
     {
       path: '/Cart',

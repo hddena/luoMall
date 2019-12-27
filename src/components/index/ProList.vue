@@ -126,7 +126,9 @@ export default {
 }
 .proLists .van-grid-item h3{
     width: 100%;
-    line-height: 200%;
+    line-height: 150%;
+    font-size: 12px;
+    margin-top:2%;
     text-align: center;
 }
 .proLists .van-grid-item p{

@@ -153,8 +153,9 @@ export default {
             }, 300)
 
             t.addorder();// 添加订单（会员） 提交订单（会员） 
-            console.log('用户支付成功！');
-
+            //console.log('用户支付成功！');
+            Toast.success('支付成功！');
+            this.$router.push('/'); // 支付成功后返回首页
           }).catch(() => {
             //点击取消执行这里的函数
             console.log('用户点击取消按钮！');

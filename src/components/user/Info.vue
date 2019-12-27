@@ -180,6 +180,7 @@ export default {
         }
       }).then((response) => {
         window.localStorage.removeItem('userInfo'); // 退出时清空本地会员信息
+        this.$store.commit('USER_INFO',''); // 退出时清空 Vuex 用户信息
         Toast('退出登录成功！');
         this.$router.replace({
           path: '/home',

@@ -28,7 +28,7 @@
       v-model="showState"
       closeable
       position="bottom"
-      :style="{ height: '50%' }"
+      :style="{ height: '60%' }"
       @close="onClose"
     >
     <div class="productBox">
@@ -52,10 +52,10 @@
               <h4 class="product-parameter" v-else>请选择商品参数</h4>
               <span class="stepper"><van-stepper v-model="numvalue" integer /></span>
             </div>
-            <div class="product-delcom" v-for="(ProductItem,n) in simulatedDATA.specifications" v-if='ProductItem.item[0].name'>
+            <div class="product-delcom" v-for="(ProductItem,n) in simulatedDATA.specifications" :key="n" v-if='ProductItem.item[0].name'>
                 <p>{{ProductItem.name}}</p>
                 <ul class="product-footerlist clearfix">
-                    <li v-for="(oItem,index) in ProductItem.item" v-on:click="specificationBtn(oItem.name,n,$event,index)" v-bind:class="[oItem.isShow?'':'noneActive',subIndex[n] == index?'productActive':'']">{{oItem.name}}</li>
+                    <li v-for="(oItem,index) in ProductItem.item" :key = "index" v-on:click="specificationBtn(oItem.name,n,$event,index)" v-bind:class="[oItem.isShow?'':'noneActive',subIndex[n] == index?'productActive':'']">{{oItem.name}}</li>
                 </ul>
             </div>
         </div>

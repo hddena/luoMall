@@ -1,10 +1,17 @@
 <template lang="html">
   <div class="topUser">
     <div class="title"><van-button plain type="info" icon="wap-home-o" size="small" to="/home" >美折购</van-button></div>
-    <div class="userInfo">
-      <van-button plain type="info" icon="user-circle-o" size="small" to="/User" v-if="userInfo">{{userInfo.data.userName}} - {{userInfo.data.userTypeName}}</van-button>
-      <van-button plain type="info" icon="user-circle-o" size="small" to="/Login" v-else>未登录</van-button>
+
+    <div class="userInfo"  v-if="userInfoFn">
+
+      <van-button plain type="info" icon="user-circle-o" size="small" to="/User" v-if="userInfoFn.nickName">{{userInfoFn.nickName}} - {{userInfoFn.userTypeName}}</van-button>
+      <van-button plain type="info" icon="user-circle-o" size="small" to="/User" v-else>{{userInfoFn.userName}} - {{userInfoFn.userTypeName}}</van-button>
+
     </div>
+    <div class="userInfo"  v-else>
+      <van-button plain type="info" icon="user-circle-o" size="small" to="/Login">未登录</van-button>
+    </div>
+
   </div>
 </template>
 <script>
@@ -25,7 +32,7 @@ export default {
   mounted: function() {
       let t = this;
       t.$nextTick(function() {
-          t.getLocalUserInfo(); 
+          // t.getLocalUserInfo(); 
           console.log(this.userInfoFn);
       });
   },

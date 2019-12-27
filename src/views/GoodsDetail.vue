@@ -341,6 +341,7 @@ export default {
 
   &-title {
     font-size: 16px;
+    font-weight: bold;
   }
 
   &-price {

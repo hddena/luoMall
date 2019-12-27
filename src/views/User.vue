@@ -12,7 +12,7 @@
       <van-cell icon="location-o" title="收货地址" is-link to="/Address"/>
       <van-cell icon="gold-coin-o" title="积分记录" is-link v-on:click="getListCommission()"/>
       <!-- <van-cell icon="service-o" title="客服中心" is-link /> -->
-      <van-cell icon="records" title="用户协议" is-link to=""/>
+      <van-cell icon="records" title="用户协议" is-link :to="{name:'资讯详情' , params:{id:'81419924-565e-4285-a1ee-1c13a786bc62'}}" />
     </van-cell-group>
     <v-service/>
     <v-divider/>

@@ -8,8 +8,22 @@
         <van-image lazy-load fit="cover" :src="k.pimg[0]" />
         <!-- <img src="https://img.yzcdn.cn/vant/apple-1.jpg"> -->
         <h3>{{k.pname}} | {{k.cname}}</h3>
-        <p><span>{{k.price_normal | moneyFormat}}</span><span><van-icon name="cart-circle-o" /></span></p>
-        <!-- <p><strike>{{k.price_normal*1.2  | moneyFormat}}</strike></p> -->
+
+        <!-- <p><span>{{k.price_normal | moneyFormat}}</span><span><van-icon name="cart-circle-o" /></span></p> -->
+        
+        <p v-if="$store.state.login.userInfo">
+          <span v-if="$store.state.login.userInfo.userType ==2">{{k.price_agent | moneyFormat}}</span>
+          <span v-else if="$store.state.login.userInfo.userType == 3">{{k.price_company | moneyFormat}}</span>
+          <span v-else>{{k.price_normal | moneyFormat}}</span>
+          <span><van-icon name="cart-circle-o" /></span>
+        </p>
+        <p v-else>
+          <span>{{k.price_normal | moneyFormat}}</span>
+          <span><van-icon name="cart-circle-o" /></span>
+        </p>
+
+
+
       </van-grid-item>
     </van-grid>
 

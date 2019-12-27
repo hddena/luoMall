@@ -1,4 +1,4 @@
-section:after ,aside:after , aside:after , p:after , li:after ,.title:after , dl:after , dt:after , dd:after{
+section:after ,.content:after,aside:after , aside:after , p:after , li:after ,.title:after , dl:after , dt:after , dd:after{
     clear: both;
     display: table;
     content: "";

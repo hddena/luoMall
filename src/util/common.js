@@ -327,6 +327,45 @@ console.log(localKey);
         return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(timeType));
     },
 
+    newsList(self, classID ) { // 资讯列表（分类）
+        let post = ()=>{
+            return new Promise(resolve => {
+                self.$dataApi({
+                    headers: {'Content-Type': 'multipart/form-data'},
+                    method: 'post',
+                    url: '/api/news/getListByCID',
+                    //url: '/mobile/index.php?m=console&c=view&a=view',
+                    params: {
+                        CID:classID
+                    }
+                }).then(response => {
+                    resolve(response.data);
+                })
+            });
+        }
+        let result = post();
+        return result;
+    },
+
+    newsDetail(self, id ) { // 资讯详情
+        let post = ()=>{
+            return new Promise(resolve => {
+                self.$dataApi({
+                    headers: {'Content-Type': 'multipart/form-data'},
+                    method: 'post',
+                    url: '/api/news/getdetail',
+                    //url: '/mobile/index.php?m=console&c=view&a=view',
+                    params: {
+                        newsID:id
+                    }
+                }).then(response => {
+                    resolve(response.data);
+                })
+            });
+        }
+        let result = post();
+        return result;
+    },
 
     getMember(self) { // 获取当前用户信息（会员）
         let post = ()=>{
@@ -348,7 +387,6 @@ console.log(localKey);
         let result = post();
         return result;
     },
-
     updateMember( self , parameter ) { // 更新会员信息（会员）
         let post = ()=>{
             return new Promise(resolve => {
