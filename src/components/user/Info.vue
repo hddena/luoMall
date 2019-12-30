@@ -18,7 +18,8 @@
       <div class="userInfo" v-if="info">
         <div class="pic"><van-icon name="contact" /></div>
         <div class="userName">
-          <h1>{{ info.userName }}</h1>
+          <h1 v-if="info.nickName" v-text="info.nickName"></h1>
+          <h1 v-else v-text="info.userName"></h1>
           <p title="登录时间">推广码：<span>{{ info.recomNum }}</span></p>
         </div>
         <div class="layer">

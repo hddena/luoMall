@@ -441,6 +441,7 @@ li {list-style-type:none;}
 }
 @media screen and (min-width:414px) {html {font-size:55.2px;}
 }
+// .van-popup{overflow: auto;}
 .productBox {position:fixed;bottom:0;left:0;width:100%;background-color:#fff;}
 .productConten {margin-bottom:0.5rem;}
 .product-delcom {padding:0.24rem 7%;color:#323232;font-size:0.26rem;border-bottom:1px solid #EEEEEE;}
