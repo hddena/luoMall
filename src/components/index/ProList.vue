@@ -64,15 +64,28 @@ export default {
       if (val) {
         if (typeof val[0].pimg === "string") { // 如果当前 val 中的图片等于 string 就证明 当前值没有转换成数组需要转换
           // console.log(val[0].pimg);
+
           for (var i = 0; i < val.length; i++) {
+
             if(typeof val[i].pimg !== 'string'){ // value不是string类型的值时需要转换
                val[i].pimg = val[i].pimg.toString();
             }
+
             val[i].pimg = val[i].pimg.split(',');
-            for (var y = 0; y < val[i].pimg.length; y++) {
-              val[i].pimg[y]= this.$store.state.category.imgPath.imgMiddle + val[i].pimg[y];
-              //console.log('不完整！');
+
+            // console.log(this.colNum);
+            if (this.colNum == 1) {
+              for (var y = 0; y < val[i].pimg.length; y++) {
+                val[i].pimg[y] = this.$store.state.category.imgPath.imgBig + val[i].pimg[y];
+                //console.log('不完整！');
+              }
+            } else {
+              for (var y = 0; y < val[i].pimg.length; y++) {
+                val[i].pimg[y] = this.$store.state.category.imgPath.imgMiddle + val[i].pimg[y];
+                //console.log('不完整！');
+              }
             }
+
           }
           //console.log(val);
         }

@@ -1,16 +1,12 @@
 <template>
   <section class="proLists">
-
     <van-divider v-if="title">{{title}}</van-divider>
-
-    <van-grid :border="false" :column-num="2" :gutter="10" >
+    <van-grid :border="false" :column-num="2" :gutter="10" v-if="proLists">
       <van-grid-item v-for="(k,i) in proLists" :key="i" v-if="title == k.cname || title == '全部'" :to=" {name:'商品详情' , params:{pid:k.pid}}" >
-        <van-image lazy-load fit="cover" :src="k.pimg[0]" />
+        <van-image lazy-load fit="cover" :src="imgPath.imgSmall + k.pimg[0]" />
         <!-- <img src="https://img.yzcdn.cn/vant/apple-1.jpg"> -->
         <h3>{{k.pname}} | {{k.cname}}</h3>
-
         <!-- <p><span>{{k.price_normal | moneyFormat}}</span><span><van-icon name="cart-circle-o" /></span></p> -->
-        
         <p v-if="$store.state.login.userInfo">
           <span v-if="$store.state.login.userInfo.userType ==2">{{k.price_agent | moneyFormat}}</span>
           <span v-else if="$store.state.login.userInfo.userType == 3">{{k.price_company | moneyFormat}}</span>
@@ -21,12 +17,8 @@
           <span>{{k.price_normal | moneyFormat}}</span>
           <span><van-icon name="cart-circle-o" /></span>
         </p>
-
-
-
       </van-grid-item>
     </van-grid>
-
   </section>
 </template>
 
@@ -46,6 +38,7 @@ export default {
   },
   props: {
     title:null,
+
     proLists: {
       type: Array,
       default: function () {
@@ -55,6 +48,7 @@ export default {
     num:null,
   },
   watch: {
+
     proLists (newValue,oldValue){ // 商品列表
       let val;
       if (newValue) {
@@ -63,6 +57,7 @@ export default {
         console.log(oldValue);
       }
     },
+    
   },
   computed: {
     imgPath () { // 图片地址

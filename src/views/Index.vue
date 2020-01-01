@@ -238,9 +238,7 @@ export default {
           userType:this.$store.state.login.userInfo.userType
         }
       }else{
-        dataParams = {
-          pcid:id
-        }
+        dataParams = { pcid:id }
       };
 
       t.$dataApi({
@@ -249,14 +247,12 @@ export default {
         url:"/api/product/getproList_proClass",
         data: dataParams
       }).then((response) => {
-
         t.proList_proClass[position].title = response.data.data.title;
         t.proList_proClass[position].list = response.data.data.list;
-
         if (response.data.msg != "success") {
-          console.log(response.data.msg);
+          //console.log(response.data.msg);
         }else{
-          console.log(t.proList_proClass);
+          //console.log(t.proList_proClass);
         }
       }).catch(function(error) {
         console.log(error)

@@ -2,21 +2,19 @@
   <div class="category">
   <v-navbar/>
   <v-search/>
-
+    <div>{{userInfo}}</div>
     <div class="tabTabs">
       <van-tabs v-model="tabsActive" sticky @click="onClickTabs">
         <van-tab name="全部" title="全部">
-          <v-goodslist :proLists='proList' :num='10' title='全部'/>
+          <v-goodslist :proLists='proListData' :num='10' title='全部'/>
         </van-tab>
         <van-tab v-for="(k,i) in classList" :name="k.cname" :title="k.cname" :key="i">
-          <v-goodslist :proLists='proList' :num='10' :title='k.cname'/>
+          <v-goodslist :proLists='proListData' :num='10' :title='k.cname'/>
         </van-tab>
       </van-tabs>
     </div>
 
     <div class="bottomPic"><van-image lazy-load fit="cover" src="https://www.apple.com/v/iphone-11-pro/a/images/overview/camera/night_mode_hero__bhkljycv3v36_large.jpg" /></div>
-  <!-- <div class="proListPath">{{proListPath}}</div> -->
-  <!-- <v-main :classLists='classList' :proLists='proList'/> -->
   <v-divider/>
   <v-tabbar/>
   </div>
@@ -61,17 +59,18 @@ export default {
       topHeight:null,
       scroll:null,
       tabsActive: 'all',
+      proListData:{
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+
     }
   },
 
   props: {
     classList: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    },
-    proList: {
       type: Array,
       default: function () {
         return []
@@ -89,8 +88,17 @@ export default {
     proList(newValue,oldValue){
       //console.log(newValue,oldValue);
     },
+    userInfo (newValue,oldValue) { // 监测到 userInfo 值有变化时重新获取商品信息
+      this.getproList();  // 产品列表
+    },
   },
   computed: {
+
+    userInfo () { // vuex userInfo
+      return this.$store.state.login.userInfo
+      t.getproList();  // 产品列表
+    },
+
     imgPath () { // 图片地址
       return this.$store.state.category.imgPath
     },
@@ -114,26 +122,31 @@ export default {
   mounted: function() {
       let t = this ;
       t.$nextTick(function() {
-        console.log(this.$route);
+        //console.log(this.$route);
         //console.log(this.imgPath);
-        // this.setStyle();// 样式设置
         // window.addEventListener('scroll', this.handleScroll); //监听滚动条
-        this.classFilter();
+        // t.classFilter();  // 路由切换
 
+        t.getproList();  // 产品列表
       });
   },
   methods: {
+
+    getproList(){  // 产品列表
+      // console.log('getproList + 产品列表')
+      let t = this;
+      let stateUserInfo = new Object();
+      let stateImgPath = this.$store.state.category.imgPath;
+      stateUserInfo = this.userInfo;
+
+      Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.proListData = value;
+        // console.log(t.proListData);
+      });
+    },
+
     setStyle(){ // 初始化样式
-      /*
-      let navBar = document.getElementsByClassName('NavBar')[0];
-      let search = document.getElementsByClassName('search')[0];
-      let sidebar = document.getElementsByClassName('sidebar')[0];
-      let main = document.getElementsByClassName('main')[0];
-      this.topHeight = navBar.offsetHeight + search.offsetHeight
-      sidebar.style.top = this.topHeight + 'px';
-      main.style.paddingLeft = sidebar.offsetWidth + 8 + 'px';
-      // console.log(this.topHeight);
-      */
       let tabTabs = document.getElementsByClassName('TabTabs')[0];
       let tabTabsTitle = tabTabs.getElementsByClassName('van-tabs__wrap')[0];
       console.log(tabTabsTitle);
@@ -194,8 +207,8 @@ export default {
       // 路由切换 end
     },
     onClickTabs(name, title){
-      console.log('tabsActive:'+this.tabsActive);
-      console.log('name:'+name, 'title:'+title);
+      // console.log('tabsActive:'+this.tabsActive);
+      // console.log('name:'+name, 'title:'+title);
     }
 
   }

@@ -37,7 +37,7 @@ export default {
       } else {
         this.active = 0
       }
-      console.log(this.active );
+      // console.log(this.active );
       /*
       switch(表达式) {
          case n:

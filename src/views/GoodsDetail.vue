@@ -117,11 +117,11 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      console.log('to:'+to.path);
-      console.log('from:'+from.path);
+      //console.log('to:'+to.path);
+      //console.log('from:'+from.path);
       if (to.path != from.path) {
-        console.log(this.$route.params.id);
-        console.log('重新请求数据！')
+        //console.log(this.$route.params.id);
+        //console.log('重新请求数据！')
         this.getDetail();
         //this.$router.go(0); //刷新
       } else {

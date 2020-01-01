@@ -8,7 +8,6 @@ import store from '@/vuex/store.js'   //vuex
 import dataApi from '@/http/dataApi.js'       //http数据请求
 
 Vue.prototype.$dataApi = dataApi;
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

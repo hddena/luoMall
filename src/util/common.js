@@ -327,6 +327,61 @@ console.log(localKey);
         return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(timeType));
     },
 
+
+    proClassList(self ) { // 产品类别列表（分类）
+        let post = ()=>{
+            return new Promise(resolve => {
+                self.$dataApi({
+                    headers: {'Content-Type': 'multipart/form-data'},
+                    method: 'post',
+                    url: '/api/product/getclassList',
+                    //url: '/mobile/index.php?m=console&c=view&a=view',
+                    params: {
+                        CID:1
+                    }
+                }).then(response => {
+                    resolve(response.data);
+                })
+            });
+        }
+        let result = post();
+        return result;
+    },
+
+    proList(self , stateUserInfo , stateImgPath) { // 产品类别列表（分类）
+        if (stateUserInfo == null) {
+            stateUserInfo = {
+            childType : 0,
+            userType : 0
+            };
+            console.log('stateUserInfo值为空，使用默认值！')
+        }
+        let post = ()=>{
+            return new Promise(resolve => {
+                self.$dataApi({
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    method: 'post',
+                    url: '/api/product/getproList',
+                    //url: '/mobile/index.php?m=console&c=view&a=view',
+                    params: {
+                        showAll:0,
+                        childType:stateUserInfo.childType,
+                        userType:stateUserInfo.userType
+                    }
+                }).then(response => {
+                    let resData = response.data.data;
+                    for (var i = 0; i < resData.length; i++) {
+                        resData[i].pimg = resData[i].pimg.split(',');
+                    }
+                    //console.log(resData);
+                    resolve(resData);
+                })
+            });
+        }
+        let result = post();
+        return result;
+    },
+
     newsList(self, classID ) { // 资讯列表（分类）
         let post = ()=>{
             return new Promise(resolve => {

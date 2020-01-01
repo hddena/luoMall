@@ -33,7 +33,7 @@ export default {
       let t = this;
       t.$nextTick(function() {
           // t.getLocalUserInfo(); 
-          console.log(this.userInfoFn);
+          // console.log(this.userInfoFn);
       });
   },
   computed: {

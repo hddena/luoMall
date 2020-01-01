@@ -1,12 +1,19 @@
 <template>
   <div id="app">
-
-    <!-- <keep-alive> -->
+<!-- 
+    <keep-alive>
       <router-view
         :classList="classListData"
         :proList="proListData"
       />
-    <!-- </keep-alive> -->
+    </keep-alive>
+ -->
+
+    <keep-alive>
+      <router-view
+        :classList="classListData"
+      />
+    </keep-alive>
 
     <!-- <v-loading v-show="fetchLoading"></v-loading> -->
   </div>
@@ -50,7 +57,6 @@ export default {
       let t = this ;
       t.$nextTick(function() {
         t.getClassList();
-        t.getproList();
         //t.getWeather(); // 请求天气情况
         t.getAdvertisement();
         
@@ -83,64 +89,14 @@ export default {
     },
 
     getClassList(){  // 产品类别列表
-      //let paramsB = qs('id:41')
-      let t = this;
-      t.$dataApi({
-        headers: {'Content-Type': 'multipart/form-data'},
-        method: 'post',
-        url: '/api/product/getclassList',
-      }).then((response) => {
-        t.classListData = response.data.data;
-        //console.log(t.classListData);
-      }).catch(function(error) {
-        console.log(error)
-      })
+      let t = this ;
+      Util.proClassList(t).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.classListData = value.data;
+        // console.log(t.classListData);
+      });
     },
-    getproList(){  // 产品列表
-      //let paramsB = qs('id:41')
-      let t = this;
-      let u = new Object();
-      if (this.$store.state.login.userInfo) {
-        u = this.$store.state.login.userInfo;
-      } else if(window.localStorage.getItem('userInfo')) {
-        u = JSON.parse(window.localStorage.getItem('userInfo')).data;
-      } else  {
-        console.log('没用户信息');
-      }
 
-      t.$dataApi({
-        headers: {'Content-Type': 'multipart/form-data'},
-        method: 'post',
-        url: '/api/product/getproList',
-        params: {
-          childType:u.childType,
-          userType:u.userType
-        }
-      }).then((response) => {
-        //JSON.parse(window.localStorage.getItem(key))
-        t.proListData = response.data.data;
-
-
-        for (var i = 0; i < response.data.data.length; i++) { // 图片将字符串字符转为数组
-          t.proListData[i].pimg = response.data.data[i].pimg.split(',');
-          //indexOf(item.time);
-          for (var y = 0; y < t.proListData[i].pimg.length; y++) {
-            if(t.proListData[i].pimg[y].indexOf('http') !== -1){
-              console.log('图片地址完整！');
-            }else{
-              t.proListData[i].pimg[y]= this.$store.state.category.imgPath.imgMiddle + t.proListData[i].pimg[y];
-              //console.log('不完整！');
-            };
-          }
-        }
-
-        this.$store.commit('PRO_LIST',t.proListData);
-        //console.log(t.proListData);
-        //console.log(Util.shuffle(t.proListData));
-      }).catch(function(error) {
-        console.log(error)
-      })
-    },
     getAdvertisement(){  // 获取广告列表
       //let paramsB = qs('id:41')
       let t = this;

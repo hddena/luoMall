@@ -1,8 +1,18 @@
+//import Vue from 'vue';
 import axios from 'axios'
 import qs from 'qs'
 import store from '@/vuex/store.js'
 import router from '../router'
 // import qs from 'qs'
+
+/*
+import { Toast  } from 'vant';
+Vue.use(Toast); //Toast 轻提示
+Toast.loading({
+  message: '加载中...',
+  forbidClick: true
+});
+*/
 
 const dataApi = axios.create();
 // console.log( window.location.host );
@@ -23,6 +33,9 @@ dataApi.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencod
 dataApi.defaults.headers.post['X-Requested-With'] = 'XMLHttpRequest'
 dataApi.defaults.withCredentials=true;//让ajax携带cookie
 //buyyearApi.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+
+
+
 
 //请求拦截器
 dataApi.interceptors.request.use(function (config) {
