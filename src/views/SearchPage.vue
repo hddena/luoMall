@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="searchPage">
   	<!-- <h1>搜索</h1> -->
-    <v-search :proLists='proList' />
+    <v-search :proLists='proListData' />
     <v-divider/>
     <v-tabbar/>
   </div>
@@ -22,7 +22,16 @@ export default {
     return {
       //searchResultTitle:'搜索结果',
       classList:null,
-      proList:null,
+      // proList:null,
+
+      proListData:{
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+
+
       loading: true,
     }
   },
@@ -59,6 +68,26 @@ export default {
         console.log(error)
       })
     },
+
+
+
+    getproList(){  // 产品列表
+      // console.log('getproList + 产品列表')
+      let t = this;
+      let stateUserInfo = new Object();
+      let stateImgPath = this.$store.state.category.imgPath;
+      stateUserInfo = this.userInfo;
+
+      Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.proListData = value;
+        // console.log(t.proListData);
+      });
+    },
+
+
+
+/*
     getproList(){
       //let paramsB = qs('id:41')
       let t = this;
@@ -68,11 +97,12 @@ export default {
         url: '/api/product/getproList',
       }).then((response) => {
         t.proList = response.data.data;
-        console.log(t.proList);
+        //console.log(t.proList);
       }).catch(function(error) {
         console.log(error)
       })
     },
+    */
   }
 }
 </script>

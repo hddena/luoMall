@@ -44,7 +44,7 @@
 </template>
 <script>
 import Util from '../../util/common'
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 import Vue from 'vue';
 import { Dialog } from 'vant';
 // 全局注册

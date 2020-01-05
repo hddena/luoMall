@@ -2,6 +2,7 @@
   <div class="cart">
 
     <v-navbar/>
+
     <v-default-address :defaultAddress="defaultAddress"/>
     <van-checkbox-group class="card-goods" v-model="checkedGoods"  v-if="carList">
 
@@ -50,7 +51,7 @@
   </div>
 </template>
 <script>
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 import { Checkbox, CheckboxGroup, Card, SubmitBar, Toast } from 'vant';
 import defaultAddress from '@/components/cart/defaultAddress.vue'
 import Nothing from '@/components/cart/nothing'
@@ -98,15 +99,18 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+
       console.log('to:'+to.path);
       console.log('from:'+from.path);
+
+
       if (to.path != from.path) {
         console.log('重新请求数据！')
         this.getListAddress();
-        //this.$router.go(0); //刷新
       } else {
         console.log('原来数据信息！')
       }
+
     },
 
   },

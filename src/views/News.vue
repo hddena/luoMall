@@ -12,7 +12,7 @@
 
 <script>
   import Vue from 'vue';
-  import NavBar from '@/common/NavBar'
+  import NavBar from '@/common/navBar/navBar'
   import Divider from '@/common/Divider.vue';
   import Tabbar from '@/common/Tabbar'
   import Util from '../util/common.js';

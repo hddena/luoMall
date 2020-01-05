@@ -16,7 +16,7 @@
 
 <script>
 
-import NavBar from '@/common/NavBar';
+import NavBar from '@/common/navBar/navBar';
 import Divider from '@/common/Divider';
 import Tabbar from '@/common/Tabbar';
 

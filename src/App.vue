@@ -1,6 +1,10 @@
 <template>
   <div id="app">
 <!-- 
+Vue keep-alive实践总结
+https://www.cnblogs.com/sysuhanyf/p/7454530.html
+ -->
+<!-- 
     <keep-alive>
       <router-view
         :classList="classListData"
@@ -9,11 +13,15 @@
     </keep-alive>
  -->
 
-    <keep-alive>
+    <!-- 只对组件【category】进行缓存处理 -->
+    <keep-alive include="category">
       <router-view
         :classList="classListData"
       />
     </keep-alive>
+
+
+      <!-- <router-view :classList="classListData" /> -->
 
     <!-- <v-loading v-show="fetchLoading"></v-loading> -->
   </div>

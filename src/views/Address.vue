@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 import Nothing from '@/components/address/nothing'
 import List from '@/components/address/List'
 import Divider from '@/common/Divider'

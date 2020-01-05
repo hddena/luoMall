@@ -88,7 +88,7 @@
 
 <script>
   import Vue from 'vue';
-  import NavBar from '@/common/NavBar'
+  import NavBar from '@/common/navBar/navBar'
   import Divider from '@/common/Divider.vue';
 
   import Tabbar from '@/common/Tabbar'
@@ -187,8 +187,8 @@ export default {
         repwd: self.userInfo.repwd
       }
 
-      if (this.userInfo.nickName  == '') { //判断用户名是否有填写
-        Toast('您没填写昵称！');
+      if (this.userInfo.nickName  == '' || this.userInfo.nickName.length > 7) { //判断用户名是否有填写
+      Toast('您没填写昵称或者过长！');
       } else {
         if (this.userInfo.memMobile == '') { //判断手机号码是否有填写
           Toast('手机号码没填写！');

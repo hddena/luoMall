@@ -370,6 +370,7 @@ console.log(localKey);
                     }
                 }).then(response => {
                     let resData = response.data.data;
+                    
                     for (var i = 0; i < resData.length; i++) {
                         resData[i].pimg = resData[i].pimg.split(',');
                     }
