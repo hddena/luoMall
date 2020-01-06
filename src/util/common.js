@@ -354,17 +354,17 @@ console.log(localKey);
             childType : 0,
             userType : 0
             };
-            console.log('stateUserInfo值为空，使用默认值！')
+            console.log(stateUserInfo,'stateUserInfo值为空，使用默认值！')
         }
         let post = ()=>{
             return new Promise(resolve => {
                 self.$dataApi({
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    headers: {'Content-Type': 'multipart/form-data'},
                     method: 'post',
                     url: '/api/product/getproList',
                     //url: '/mobile/index.php?m=console&c=view&a=view',
                     params: {
-                        showAll:0,
+                        showAll:1,  // 0 按下面设置的会员等级显示，1 全部商品显示
                         childType:stateUserInfo.childType,
                         userType:stateUserInfo.userType
                     }
