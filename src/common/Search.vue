@@ -10,22 +10,26 @@
     >
     <div slot="action" @click="onSearch">搜索</div>
     </van-search>
+
+    <h1 v-if="value && searchData.length != 0">正在搜索：<span style="color: #f00;" v-text="value"></span></h1>
     <v-prolist :proLists='searchData' colNum="2" :num='num[2]' :title='searchResultTitle' v-if="value"/>
     <!-- <h1 v-else-if="searchData.length == 0 ">没找搜索到！</h1> -->
     <!-- <h1 v-else-if="searchResult == -1 ">没找搜索到！</h1> -->
-    <h1 v-else><span v-show="this.$route.path == '/Search'">请开始搜索！</span></h1>
-    <h1 v-show="searchData.length == 0 && this.$route.path == '/Search' ">没找到搜索内容！</h1>
+    <h1 v-else><span v-show="this.$route.path == '/Search'">请输入关键字进行搜索！</span></h1>
+    <!-- <h1 v-show="searchData.length == 0 && this.$route.path == '/Search' ">没找到搜索内容！</h1> -->
+    <h1 v-show="value && searchData.length == 0 && this.$route.path == '/Search' ">没找到<span style="color: #f00;" v-text="value"></span>的内容！</h1>
+
+    <!-- <v-prolist :proLists='searchData' colNum="2" num='100' title='testTitle' /> -->
 
   </div>
 </template>
 <script>
+
 import Vue from 'vue';
-
-import ProList from '@/components/index/ProList'
-
+import ProList from '@/common/ProList'
 import { Search , Toast } from 'vant';
-
 Vue.use(Search);
+
 export default {
   name:"Search",
 
@@ -63,11 +67,13 @@ export default {
     imgPath () { // 图片地址
       return this.$store.state.category.imgPath
     },
+
     searchData: function() {
         var t = this; 
         var search = this.value;
+        // console.log(t.proLists);
         if (search) {
-            return t.$store.state.category.proList.filter(function(product) {
+            return t.proLists.filter(function(product) {
                 return Object.keys(product).some(function(key) {
                     // toLowerCase() 方法用于把字符串转换为小写
                     // return String(product[key]).toLowerCase().indexOf(search) > -1
@@ -79,6 +85,7 @@ export default {
         }
         return this.proLists;
     }
+
   },
 
   mounted: function() {

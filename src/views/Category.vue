@@ -2,7 +2,8 @@
   <div class="category">
   <v-navbar/>
   <v-search/>
-    <div>{{userInfo}}</div>
+    <!-- <div>{{userInfo}}</div> -->
+    <keep-alive>
     <div class="tabTabs">
       <van-tabs v-model="tabsActive" sticky @click="onClickTabs">
         <van-tab name="全部" title="全部">
@@ -13,6 +14,7 @@
         </van-tab>
       </van-tabs>
     </div>
+  </keep-alive>
 
     <div class="bottomPic"><van-image lazy-load fit="cover" src="https://www.apple.com/v/iphone-11-pro/a/images/overview/camera/night_mode_hero__bhkljycv3v36_large.jpg" /></div>
   <v-divider/>
@@ -21,7 +23,7 @@
 </template>
 <script>
 import Util from '../util/common.js'
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 import Search from '@/common/Search'
 import GoodsList from '@/components/category/GoodsList'
 import Sidebar from '@/components/category/Sidebar'
@@ -43,6 +45,7 @@ import { Sticky } from 'vant';
 Vue.use(Sticky);
 
 export default {
+  name:"category",
   components: {
     'v-navbar': NavBar,
     'v-search': Search,

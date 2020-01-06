@@ -18,7 +18,7 @@ import { Tab, Tabs } from 'vant';
 
 Vue.use(Tab).use(Tabs);
 
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 //import Nothing from '@/components/order/nothing.vue'
 import Something from '@/components/order/something.vue'
 //import Detail from '@/components/order/order_detail.vue'

@@ -23,7 +23,7 @@
 <script>
 import Util from '../util/common.js'
 
-import NavBar from '@/common/NavBar'
+import NavBar from '@/common/navBar/navBar'
 import Info from '@/components/user/Info'
 import Order from '@/components/user/Order'
 import Service from '@/components/user/Service'

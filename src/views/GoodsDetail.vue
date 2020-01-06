@@ -27,7 +27,7 @@
     <section class="pic">
       <van-image lazy-load fit="fill" src="http://www.jiajujiazhuang.com/images/120907/14060510I-.jpg" />
     </section>
-    <v-prolist :proLists='proList' colNum="2" :num='num[3]' :title='titleAll[0]'/>
+    <v-prolist :proLists='proListData' colNum="2" :num='num[3]' :title='titleAll[0]'/>
     <v-divider/>
     <v-footer :goods='goods' >
     </v-footer>
@@ -37,7 +37,7 @@
 <script>
 import Parameter from '@/components/goods/Parameter'
 import Swiper from '@/components/goods/Swiper'
-import ProList from '@/components/index/ProList'
+import ProList from '@/common/ProList'
 import Divider from '@/common/Divider'
 import Footer from '@/components/goods/Footer'
 import Util from '../util/common.js'
@@ -99,6 +99,13 @@ export default {
       userInfo:null,
       isSee:false,
 
+      proListData: {
+        type: Array,
+        default: function () {
+          return []
+        }
+      }
+
     };
   },
   props: {
@@ -107,13 +114,8 @@ export default {
       default: function () {
         return []
       }
-    },
-    proList: {
-      type: Array,
-      default: function () {
-        return []
-      }
     }
+
   },
   watch: {
     '$route' (to, from) {
@@ -143,7 +145,7 @@ export default {
       t.$nextTick(function() {
         //console.log(this.$route);
         t.getDetail();
-        
+        t.getproList()
       });
   },
   methods: {
@@ -158,7 +160,28 @@ export default {
           return  '¥' + Number(price.toFixed(2))
       }
     },
+
+
+    getproList(){  // 产品列表
+      // console.log('getproList + 产品列表')
+      let t = this;
+      let stateUserInfo = new Object();
+      let stateImgPath = this.$store.state.category.imgPath;
+      stateUserInfo = this.userInfo;
+
+      Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.proListData = value;
+        // console.log(t.proListData);
+      });
+    },
+
+
+
     getDetail(){
+
+      // this.goods = {};
+
       //let paramsB = qs('id:41')
       this.$dataApi({
         headers: {'Content-Type': 'multipart/form-data'},
@@ -170,7 +193,6 @@ export default {
       }).then((response) => {
         // 拼接函数(索引位置, 要删除元素的数量, 元素)
         //this.goods.thumb.splice(1, 0, this.imgPath.imgSmall + response.data.data.pimg);
-
         this.goods = this.twoJsonMerge(this.goods,response.data.data); //接收到的真实数据与默认数据合并
         this.goods.title = this.goods.pname;
 

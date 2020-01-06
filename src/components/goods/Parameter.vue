@@ -480,6 +480,7 @@ li {list-style-type:none;}
     background: #fff;
     padding: .15rem;
     box-shadow: 0 0 1px 1px #f1f1f1;
+    overflow: hidden;
     img{
       width: 100%;
       height: 100%;

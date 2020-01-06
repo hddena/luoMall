@@ -1,13 +1,16 @@
 <template lang="html">
   <div class="index">
-    <v-topuserinfo/>
+    
+    <v-navbar/>
+
+    <!-- <v-topuserinfo/> -->
     <v-search/>
     <!-- <a href="weixin://" οnclick="PIWI_SUBMIT.Weixin_Open()">点击跳转到微信</a> -->
     <v-swipe/>
     <!-- <router-link :to="{path:'/Login', params: { id: 'login' }}">登录</router-link> -->
     <v-serviceicon/>
 
-    <v-roblist :proLists='canPurchase' :num='10' :title='titleAll[0]' :time="timeDiff" v-if="roblistShow"/>
+    <v-roblist :proLists='canPurchase' :num='10' :title='titleAll[0]' :time="timeDiff" v-if="roblistShow && canPurchase.length > 0"/>
 
     <v-prolist :proLists='proList_proClass.ten.list' colNum="1" num='100' :title='proList_proClass.ten.title' v-if="proList_proClass.ten.length != 0"/>
 
@@ -41,18 +44,20 @@
 <script>
   
 import Util from '../util/common.js'
+import NavBar from '@/common/navBar/navBar'
 import TopUserInfo from '@/common/TopUserInfo'
 import Search from '@/common/Search'
 import Swipe from '@/components/index/Swipe'
 import ServiceIcon from '@/components/index/ServiceIcon'
 import RobList from '@/components/index/RobList'
 import HotList from '@/components/index/HotList'
-import ProList from '@/components/index/ProList'
+import ProList from '@/common/ProList'
 import Divider from '@/common/Divider'
 import Tabbar from '@/common/Tabbar'
 
 export default {
   components: {
+    'v-navbar':NavBar,
     'v-topuserinfo': TopUserInfo,
     'v-search': Search,
     'v-swipe': Swipe,
@@ -75,6 +80,14 @@ export default {
       roblistShow:false,
       timeDiff:1,
 
+      proListData:{
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+
+
       proList_proClass:{ // 产品列表（首页展示）
         one:{title:null,list:[]},
         two:{title:null,list:[]},
@@ -96,12 +109,8 @@ export default {
         return []
       }
     },
-    proList: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
+
+
   },
   watch: {
     //classLists(newValue,oldValue){
@@ -118,11 +127,11 @@ export default {
     },
     canPurchase(){
       let arr = new Array;
-      if (this.proList) {
-        for (var i = 0; i < this.proList.length; i++) {
-          this.proList[i]
-          if (this.proList[i].isCanPurchase == 1) {
-            arr.push(this.proList[i]);
+      if (this.proListData) {
+        for (var i = 0; i < this.proListData.length; i++) {
+          this.proListData[i]
+          if (this.proListData[i].isCanPurchase == 1) {
+            arr.push(this.proListData[i]);
           }
         }
       }
@@ -132,12 +141,18 @@ export default {
   },
   mounted: function() {
       let t = this ;
+
       t.$nextTick(function() {
         t.getPurDateTime ();   // 抢购时间范围
         t.getproList_proClass('a8cb9b56-7f13-447c-9199-39fd24eec10c','one');  // 产品列表（首页展示）- 新品
         t.getproList_proClass('6a105926-2770-4087-84e6-9ab13a60e77e','two');  // 产品列表（首页展示）- 超值精选
-        t.getproList_proClass('f5f00c62-c601-4b04-95ed-55ccdf3a0b28','ten')
+        t.getproList_proClass('f5f00c62-c601-4b04-95ed-55ccdf3a0b28','ten');
+        t.getproList(); // 产品列表
+
       });
+
+
+
   },
   methods: {
 
@@ -229,6 +244,22 @@ export default {
         return retValue;
     },
 
+
+    getproList(){  // 产品列表
+      // console.log('getproList + 产品列表')
+      let t = this;
+      let stateUserInfo = new Object();
+      let stateImgPath = this.$store.state.category.imgPath;
+      stateUserInfo = this.userInfo;
+
+      Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.proListData = value;
+        // console.log(t.proListData);
+      });
+    },
+
+
     getproList_proClass(id,position){  // 产品列表（首页展示）
       let t = this , dataParams;
       if(this.$store.state.login.userInfo){
@@ -247,8 +278,18 @@ export default {
         url:"/api/product/getproList_proClass",
         data: dataParams
       }).then((response) => {
+        let imgArr = new Array;
         t.proList_proClass[position].title = response.data.data.title;
         t.proList_proClass[position].list = response.data.data.list;
+        // console.log(response.data.data.list[i].pimg);
+        // console.log(response.data.data.list.pimg.split(','));
+        // t.proList_proClass[position].list = response.data.data.list;
+
+        for (var i = 0; i < response.data.data.list.length; i++) {
+            t.proList_proClass[position].list[i].pimg = response.data.data.list[i].pimg.split(',');
+        }
+        console.log(t.proList_proClass[position].list);
+
         if (response.data.msg != "success") {
           //console.log(response.data.msg);
         }else{

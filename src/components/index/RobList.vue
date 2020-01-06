@@ -13,7 +13,7 @@
       <!-- slides -->
       <swiper-slide v-for="(k,i) in proLists" :key="i" v-if="proLists && i < num " :to=" {name:'商品详情' , params:{pid:k.pid}}">
         <router-link :to=" {name:'商品详情' , params:{pid:k.pid}}">
-          <van-image lazy-load fit="cover" :src="k.pimg[0]" />
+          <van-image lazy-load fit="cover" :src="imgPath.imgBig + k.pimg[0]" />
           <div class="product-info">
             <h3 class="itemTitle">{{k.pname}}&nbsp;&nbsp;&nbsp;<van-tag plain type="danger">{{k.cname}}</van-tag></h3>
             <!-- <p><span class="itemPrice">{{k.price_purchase}}</span>&nbsp;&nbsp;&nbsp;<van-icon name="cart-o" /></p> -->

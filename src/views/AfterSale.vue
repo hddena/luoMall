@@ -14,7 +14,7 @@
 import Util from '../util/common.js'
 import Search from '@/common/Search'
 import Swipe from '@/components/index/Swipe'
-import ProList from '@/components/index/ProList'
+import ProList from '@/common/ProList'
 import Divider from '@/common/Divider'
 import Tabbar from '@/common/Tabbar'
 export default {
