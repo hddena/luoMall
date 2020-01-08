@@ -35,11 +35,10 @@ dataApi.defaults.withCredentials=true;//让ajax携带cookie
 //buyyearApi.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
 
-
-
 //请求拦截器
 dataApi.interceptors.request.use(function (config) {
     // 在发起请求请做一些业务处理
+
 
       if(config.method === 'post'){
         config.data = qs.stringify(config.data)
@@ -57,6 +56,10 @@ dataApi.interceptors.request.use(function (config) {
   });
 //响应拦截器
 dataApi.interceptors.response.use(function (response) {
+
+      let path = router.apps;
+      console.log(path);
+
     // 对响应数据做处理
     //console.log(response);
     if (!response.data.Message || response.data.ret == 1 ) {

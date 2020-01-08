@@ -348,33 +348,70 @@ console.log(localKey);
         return result;
     },
 
+/*
+
+proList( self , parameter ) { // 更新会员信息（会员）
+    let post = ()=>{
+        return new Promise(resolve => {
+            self.$dataApi({
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                method: 'post',
+                url: '/api/product/getproList',
+                //url: '/mobile/index.php?m=console&c=view&a=view',
+                data: {
+                    showAll:0,
+                    userType : 2,  // 大类
+                    childType : 6, // 小类
+                }
+            }).then(response => {
+                let resData = response.data.data;
+                for (var i = 0; i < resData.length; i++) {
+                    resData[i].pimg = resData[i].pimg.split(',');
+                }
+                //console.log(resData);
+                resolve(resData);
+            })
+        });
+    }
+    let result = post();
+    return result;
+},
+
+
+*/
+
+
+
     proList(self , stateUserInfo , stateImgPath) { // 产品类别列表（分类）
+        let params;
         if (stateUserInfo == null) {
-            stateUserInfo = {
-            childType : 0,
-            userType : 0
+            params = {
+                showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                childType:4,  // 小类
+                userType:1     // 大类
             };
             console.log(stateUserInfo,'stateUserInfo值为空，使用默认值！')
+        }else{
+            params = {
+                showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                childType:stateUserInfo.childType,  // 小类
+                userType:stateUserInfo.userType     // 大类
+            };
+            console.log(stateUserInfo,'stateUserInfo有值！')
         }
         let post = ()=>{
             return new Promise(resolve => {
                 self.$dataApi({
-                    headers: {'Content-Type': 'multipart/form-data'},
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     method: 'post',
                     url: '/api/product/getproList',
-                    //url: '/mobile/index.php?m=console&c=view&a=view',
-                    params: {
-                        showAll:1,  // 0 按下面设置的会员等级显示，1 全部商品显示
-                        childType:stateUserInfo.childType,
-                        userType:stateUserInfo.userType
-                    }
+                    //0 所有人可见  1 普通会员  4 普通会员A  5 普通会员B  2 代理  6 代理A  7 代理B  3 分公司  8 分公司A  9 分公司B
+                    data: params
                 }).then(response => {
                     let resData = response.data.data;
-                    
                     for (var i = 0; i < resData.length; i++) {
                         resData[i].pimg = resData[i].pimg.split(',');
                     }
-                    //console.log(resData);
                     resolve(resData);
                 })
             });
@@ -408,7 +445,7 @@ console.log(localKey);
             return new Promise(resolve => {
                 self.$dataApi({
                     headers: {'Content-Type': 'multipart/form-data'},
-                    method: 'post',
+                    method: 'get',
                     url: '/api/news/getdetail',
                     //url: '/mobile/index.php?m=console&c=view&a=view',
                     params: {

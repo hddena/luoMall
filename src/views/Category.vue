@@ -2,8 +2,7 @@
   <div class="category">
   <v-navbar/>
   <v-search/>
-    <!-- <div>{{userInfo}}</div> -->
-    <keep-alive>
+    <div>{{userInfo}}</div>
     <div class="tabTabs">
       <van-tabs v-model="tabsActive" sticky @click="onClickTabs">
         <van-tab name="全部" title="全部">
@@ -14,7 +13,6 @@
         </van-tab>
       </van-tabs>
     </div>
-  </keep-alive>
 
     <div class="bottomPic"><van-image lazy-load fit="cover" src="https://www.apple.com/v/iphone-11-pro/a/images/overview/camera/night_mode_hero__bhkljycv3v36_large.jpg" /></div>
   <v-divider/>
@@ -68,7 +66,7 @@ export default {
           return []
         }
       },
-
+      userInfo:null,
     }
   },
 
@@ -92,14 +90,17 @@ export default {
       //console.log(newValue,oldValue);
     },
     userInfo (newValue,oldValue) { // 监测到 userInfo 值有变化时重新获取商品信息
-      this.getproList();  // 产品列表
+      let t = this ;
+      console.log(t.$store.state.login.userInfo);
+      t.getproList();  // 产品列表
     },
   },
   computed: {
 
     userInfo () { // vuex userInfo
-      return this.$store.state.login.userInfo
+      let t = this;
       t.getproList();  // 产品列表
+      return this.$store.state.login.userInfo
     },
 
     imgPath () { // 图片地址
@@ -140,7 +141,7 @@ export default {
       let t = this;
       let stateUserInfo = new Object();
       let stateImgPath = this.$store.state.category.imgPath;
-      stateUserInfo = this.userInfo;
+      stateUserInfo = t.userInfo;
 
       Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
         //t.userInfo = Object.assign(t.userInfo, value.data);
