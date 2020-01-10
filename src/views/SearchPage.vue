@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="searchPage">
   	<!-- <h1>搜索</h1> -->
-    <v-search :proLists='proListData' />
+    <v-search :proLists='proList' />
     <v-divider/>
     <v-tabbar/>
   </div>
@@ -31,10 +31,19 @@ export default {
         }
       },
 
-
       loading: true,
     }
   },
+
+  props: {
+    proList: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+  },
+
   watch: {
     proList(newValue,oldValue){
       //console.log(newValue,oldValue);
@@ -50,7 +59,7 @@ export default {
       t.$nextTick(function() {
         console.log(this.imgPath);
         t.getClassList();
-        t.getproList();
+        // t.getproList();
       });
   },
   methods: {
@@ -85,24 +94,6 @@ export default {
       });
     },
 
-
-
-/*
-    getproList(){
-      //let paramsB = qs('id:41')
-      let t = this;
-      t.$dataApi({
-        headers: {'Content-Type': 'multipart/form-data'},
-        method: 'post',
-        url: '/api/product/getproList',
-      }).then((response) => {
-        t.proList = response.data.data;
-        //console.log(t.proList);
-      }).catch(function(error) {
-        console.log(error)
-      })
-    },
-    */
   }
 }
 </script>

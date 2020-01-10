@@ -124,7 +124,6 @@ export default {
         Toast.fail('参数未选！');
       }
 
-      
     },
     onConfirm(){
       var t = this;
@@ -150,8 +149,11 @@ export default {
     },
     onBuy(){ 
       //console.log('showSku 显示状态');
-      this.$router.push('/cart');
+      // this.$router.push('/cart');
       //this.showState = true;
+      this.$store.commit('SHOW_STATE',true); //修改商品参数弹层
+      console.log(this.$store.state.detail.showState)
+      console.log('立即购买！' + new Date());
     },
     goHome() {
       this.$router.push('/');

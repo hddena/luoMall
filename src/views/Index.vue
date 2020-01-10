@@ -135,7 +135,7 @@ export default {
           }
         }
       }
-      console.log(arr);
+      // console.log(arr);
       return arr;
     },
   },
@@ -174,6 +174,7 @@ export default {
         let nowHour = new Date().getHours(); //获取当前小时
         let nowMinute = new Date().getMinutes(); //获得当前分钟
         let nowSeconds = new Date().getSeconds() //获得当前秒
+        
         let nowTime = nowYear+'-'+nowMonth+'-'+nowToday+' '+nowHour+':'+nowMinute+':'+nowSeconds;
         let beginTime = Util.GetDateDiff(nowTime,response.data.data.beginTime_purchase,"minute");
         let endTime = Util.GetDateDiff(nowTime,response.data.data.endTime_purchase,"minute");
@@ -190,7 +191,7 @@ export default {
           this.roblistShow = true;
           this.timeDiff = endTime * 60 * 1000;
         } 
-        console.log(beginTime , endTime);
+        // console.log(beginTime , endTime);
       }).catch(function(error) {
         console.log(error)
       })
@@ -288,7 +289,7 @@ export default {
         for (var i = 0; i < response.data.data.list.length; i++) {
             t.proList_proClass[position].list[i].pimg = response.data.data.list[i].pimg.split(',');
         }
-        console.log(t.proList_proClass[position].list);
+        // console.log(t.proList_proClass[position].list);
 
         if (response.data.msg != "success") {
           //console.log(response.data.msg);

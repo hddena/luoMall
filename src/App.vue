@@ -1,30 +1,17 @@
 <template>
-  <div id="app">
-<!-- 
-Vue keep-alive实践总结
-https://www.cnblogs.com/sysuhanyf/p/7454530.html
- -->
-<!-- 
-    <keep-alive>
-      <router-view
-        :classList="classListData"
-        :proList="proListData"
-      />
-    </keep-alive>
- -->
-
-    <!-- 只对组件【category】进行缓存处理 -->
-    <keep-alive include="category">
-      <router-view
-        :classList="classListData"
-      />
-    </keep-alive>
-
-
-      <!-- <router-view :classList="classListData" /> -->
-
-    <!-- <v-loading v-show="fetchLoading"></v-loading> -->
-  </div>
+    <div id="app">
+        <!-- 
+        Vue keep-alive实践总结
+        https://www.cnblogs.com/sysuhanyf/p/7454530.html
+        -->
+        <!-- 只对组件【category】进行缓存处理 -->
+        <keep-alive include="category">
+            <router-view
+            :classList="classListData"
+            :proList="proListData"
+            />
+        </keep-alive>
+    </div>
 </template>
 
 <script>
@@ -41,20 +28,37 @@ export default {
   },
   data() {
     return {
-      classListData:null,
-      proListData:null,
-      weather:null,
+        classListData:null,
+        proListData:null,
+        weather:null,
     }
   },
   watch: {
+
+    '$route' (to, from) {
+        let t = this;
+      // console.log('to:'+to.path);
+      // console.log('from:'+from.path);
+      console.log(this.$route.path);
+      if (this.$route.path == '/Category' || this.$route.path == '/Search') {
+        t.getproList();
+        setTimeout(function(){
+          t.getproList();
+        }, 1000); // 1秒
+      } else {
+        console.log('原来数据信息！')
+      }
+    },
+
     userInfo(newValue,oldValue){
-      console.log(newValue,oldValue);
+      // console.log(newValue,oldValue);
+      this.getproList();
       if (newValue) {
         Util.extensionCode(); //地址栏添加推广码
       } else {
         console.log('用户还没登录！')
       }
-    }
+    },
   },
   computed: {
     userInfo () { // 用户信息
@@ -64,13 +68,21 @@ export default {
   mounted: function() {
       let t = this ;
       t.$nextTick(function() {
-        t.getClassList();
+        t.getClassList(); 
+        t.getproList(); 
         //t.getWeather(); // 请求天气情况
         t.getAdvertisement();
         
         // t.clearCarList(); //在规定时间里清空购物车
         Util.carTimeDifference(); // 时间差的作用是为了超出时间后删除购物车内容
         // t.arraylist(); //数组排序
+        Util.userTimeDifference(); // 时间差的作用是为了超出时间后删除本地用户信息
+
+        // setInterval(function(){
+        //   t.isLogin();
+        // }, 5000); // 5秒
+
+
       });
   },
   methods: {
@@ -104,7 +116,19 @@ export default {
         // console.log(t.classListData);
       });
     },
+    getproList(){  // 产品列表
+      // console.log('getproList + 产品列表')
+      let t = this;
+      let stateUserInfo = new Object();
+      let stateImgPath = this.$store.state.category.imgPath;
+      stateUserInfo = t.$store.state.login.userInfo;
 
+      Util.proList(t, stateUserInfo , stateImgPath).then((value) => { // 获取当前用户信息（会员）
+        //t.userInfo = Object.assign(t.userInfo, value.data);
+        t.proListData = value;
+        // console.log(t.proListData);
+      });
+    },
     getAdvertisement(){  // 获取广告列表
       //let paramsB = qs('id:41')
       let t = this;
@@ -172,6 +196,25 @@ export default {
 
       }
       //console.log(today);
+    },
+    isLogin(){
+      let t = this,
+      nowTime ='!------'+ new Date().getHours() +'时'+ new Date().getMinutes() +'分'+ new Date().getSeconds() +'秒------！',
+      lsUserInfo = window.localStorage.getItem('userInfo');// 获取 localStorage 本地 userInfo 信息
+      if (lsUserInfo) {
+        let userInfoData = JSON.parse(lsUserInfo).data;
+        this.$store.commit('USER_INFO',userInfoData); //用户信息赋值到 Vuex
+        // console.log(t.$store.state.login.userInfo.diff);
+        console.log('【APP】正在全局检测用户登录状态！')
+        Util.userTimeDifference();
+        //window.localStorage.removeItem("userInfo");
+        // Util.setLocalStorage('userInfo', JSON.parse(lsUserInfo).data , diff );
+        console.log(nowTime);
+      } else{
+        console.log('【APP】检测到本地没有用户登信息！');
+        console.log(nowTime);
+      }
+
     },
 
   },

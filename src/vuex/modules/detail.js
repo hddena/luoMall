@@ -18,6 +18,7 @@ const state = {
   selectedParameter:null, // 己经选定的参数
   numValue:1 ,//商品数量
   defaultPrice: 88888, //商品价格
+  showState:false, //商品参数弹层
 }
 
 
@@ -45,6 +46,11 @@ const mutations = {
   //商品价格
   [types.RPO_SET_PRICE] (state,res) {
     state.defaultPrice = res
+  },
+
+  //商品参数弹层
+  [types.SHOW_STATE] (state,res) {
+    state.showState = res
   },
 
 //异步请求的数据

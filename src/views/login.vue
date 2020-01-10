@@ -131,7 +131,7 @@ export default {
 
             this.$store.commit('USER_INFO',response.data.data); //用户信息赋值到 Vuex
 
-            Toast('登录成功,跳转到会员中心！');
+            Toast.success('登录成功！');
             this.toggle = false;
             this.$store.commit('CHANGE_TOKEN',1);
             //this.$store.commit('USER_INFO',response.data.data);
@@ -139,7 +139,7 @@ export default {
 
             setTimeout(()=>{
               this.$router.replace({
-                path: 'user'
+                path: '/Home'
               })
             },1000);
             // 登录成功

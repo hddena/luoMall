@@ -14,7 +14,7 @@
       <!-- <van-cell icon="service-o" title="客服中心" is-link /> -->
       <van-cell icon="records" title="用户协议" is-link :to="{name:'资讯详情' , params:{id:'81419924-565e-4285-a1ee-1c13a786bc62'}}" />
     </van-cell-group>
-    <v-service/>
+    <!-- <v-service/> -->
     <v-divider/>
     <v-tabbar/>
   </div>
@@ -95,13 +95,15 @@ export default {
           //this.$store.commit('CHANGE_TOKEN',1);
           this.$store.commit('USER_INFO',response.data.data); //用户信息赋值到 Vuex
           this.userInfo = response.data.data;
+          // let diff = new Date().getTime();
           console.log('当前会员共登录：'+this.userInfo.memLoginCount+'次');
           //console.log(response.data.data);
           console.log(this.userInfo);
           this.getAmountCommission() ; // 获取当取用户佣金总额
           this.getListCommission(); // 获取当取用户佣金列表
           window.localStorage.removeItem("userInfo");
-          Util.setLocalStorage('userInfo', response.data.data);
+          Util.setLocalStorage('userInfo', response.data.data );
+          // Util.setLocalStorage('userInfo', response.data.data , diff);
         } else {
           //this.$store.commit('CHANGE_TOKEN',0);
           /*

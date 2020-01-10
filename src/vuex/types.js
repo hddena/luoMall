@@ -18,6 +18,9 @@ export const RPO_SET_NUM = 'RPO_SET_NUM'
 //goods 商品价格
 export const RPO_SET_PRICE = 'RPO_SET_PRICE'
 
+//goods 商品参数弹层
+export const SHOW_STATE = 'SHOW_STATE'
+
 export const SET_DATAS = 'SET_DATAS'
 
 //chose组件选择的颜色

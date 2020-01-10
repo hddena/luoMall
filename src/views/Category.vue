@@ -2,14 +2,13 @@
   <div class="category">
   <v-navbar/>
   <v-search/>
-    <div>{{userInfo}}</div>
     <div class="tabTabs">
       <van-tabs v-model="tabsActive" sticky @click="onClickTabs">
         <van-tab name="全部" title="全部">
-          <v-goodslist :proLists='proListData' :num='10' title='全部'/>
+          <v-goodslist :proLists='proList' :num='10' title='全部'/>
         </van-tab>
         <van-tab v-for="(k,i) in classList" :name="k.cname" :title="k.cname" :key="i">
-          <v-goodslist :proLists='proListData' :num='10' :title='k.cname'/>
+          <v-goodslist :proLists='proList' :num='10' :title='k.cname'/>
         </van-tab>
       </van-tabs>
     </div>
@@ -59,19 +58,18 @@ export default {
       loading: true,
       topHeight:null,
       scroll:null,
-      tabsActive: 'all',
-      proListData:{
-        type: Array,
-        default: function () {
-          return []
-        }
-      },
-      userInfo:null,
+      tabsActive: 'all'
     }
   },
 
   props: {
     classList: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    },
+    proList: {
       type: Array,
       default: function () {
         return []
@@ -89,19 +87,9 @@ export default {
     proList(newValue,oldValue){
       //console.log(newValue,oldValue);
     },
-    userInfo (newValue,oldValue) { // 监测到 userInfo 值有变化时重新获取商品信息
-      let t = this ;
-      console.log(t.$store.state.login.userInfo);
-      t.getproList();  // 产品列表
-    },
+
   },
   computed: {
-
-    userInfo () { // vuex userInfo
-      let t = this;
-      t.getproList();  // 产品列表
-      return this.$store.state.login.userInfo
-    },
 
     imgPath () { // 图片地址
       return this.$store.state.category.imgPath

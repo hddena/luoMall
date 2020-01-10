@@ -25,8 +25,8 @@ if (window.location.host.indexOf('localhost') >= 0 || window.location.host.index
   dataApi.defaults.baseURL = '/';  //打包时开启
 }
 */
-dataApi.defaults.baseURL = '/dataApi';  //开发时开启
-// dataApi.defaults.baseURL = '/';  //打包时开启
+// dataApi.defaults.baseURL = '/dataApi';  //开发时开启
+dataApi.defaults.baseURL = '/';  //打包时开启
 
 dataApi.defaults.timeout = 5000;
 dataApi.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -58,7 +58,7 @@ dataApi.interceptors.request.use(function (config) {
 dataApi.interceptors.response.use(function (response) {
 
       let path = router.apps;
-      console.log(path);
+      // console.log(path);
 
     // 对响应数据做处理
     //console.log(response);

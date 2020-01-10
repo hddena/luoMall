@@ -29,6 +29,7 @@
       closeable
       position="bottom"
       :style="{ height: '60%' }"
+      @open="onOpen"
       @close="onClose"
     >
     <div class="productBox">
@@ -114,10 +115,14 @@ export default {
       } else {
         this.initialData(oldValue);
       }
-   },
+    },
     parameter(newValue,oldValue){
       //console.log(newValue,oldValue);
    },
+   showStateX(newValue,oldValue){
+    this.showState = newValue
+    // console.log(newValue);
+   }
   },
   computed: {
     imgPath () { // 图片地址
@@ -126,6 +131,11 @@ export default {
     userInfo () { // 图片地址
       return this.$store.state.login.userInfo
     },
+
+     showStateX() { // 商品参数弹层
+      return this.$store.state.detail.showState
+    },
+ 
     // this.$store.commit('commit', this.orderParameter);
     // dispatch：含有异步操作，例如向后台提交数据，写法： this.$store.dispatch('action方法名',值)
     // commit：同步操作，写法：this.$store.commit('mutations方法名',值)
@@ -143,11 +153,10 @@ export default {
       self.$nextTick(function() {
         //console.log(self.simulatedDATA.difference);
         //this.initialData(this.goods);
-        
         this.$store.commit('CHANGE_SET_PARAMETER',null); //初始化清空商品参数
         this.$store.commit('RPO_SET_NUM',this.numvalue); //初始化商品数量
-
         this.getPurDateTime () ; // 抢购时间范围 ， 时间差
+        console.log(this.showStateX);
       });
   },
   methods: {
@@ -165,6 +174,15 @@ export default {
       } else{
         Toast.fail('参数未选齐！');
       }
+      // this.showState = false
+      this.$store.commit('SHOW_STATE',false); //修改商品参数弹层
+      // console.log(this.$store.state.detail.showState);
+      console.log('参数弹层已经关闭' + new Date());
+      console.log(' ');
+    },
+    onOpen(){
+      console.log('参数弹层已经打开' + new Date());
+      // console.log(' ');
     },
     specificationBtn (item, n, event, index) {
         var self = this;

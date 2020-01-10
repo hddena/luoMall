@@ -52,10 +52,11 @@ export default {
     proLists (newValue,oldValue){ // 商品列表
       let val;
       if (newValue) {
-        console.log(newValue);
+        val = newValue;
       } else {
-        console.log(oldValue);
+        val = oldValue;
       }
+      // console.log(val);
     },
     
   },

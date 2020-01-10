@@ -28,11 +28,12 @@ export default {
     },
 
 //封装localStorage过期控制代码
-setLocalStorage(key, value) {
+setLocalStorage(key, value ,dTime) {
     var curtime = new Date().getTime(); // 获取当前时间 ，转换成JSON字符串序列 
     var valueDate = JSON.stringify({
         data: value,
-        timer: curtime
+        timer: curtime,
+        diff: dTime,
     });
     try {
         localStorage.setItem(key, valueDate);
@@ -297,6 +298,54 @@ console.log(localKey);
         }
     },
 
+    userTimeDifference(){ // 时间差的作用是为了超出时间后删除本地用户信息
+        let 
+        timeDayDifference , timeHouDifference , timeMinDifference,
+        userInfo = window.localStorage.getItem('userInfo'),// 获取 localStorage 本地 userInfo 信息
+        nowToday = new Date().getDate(), //今天几号
+        nowHours = new Date().getHours(), // 当前是几点
+        nowMinutes = new Date().getMinutes(); // 当前是几分钟
+
+        // console.log('今天是'+nowToday+'号，当前时间'+nowHours+':' + nowMinutes);
+
+        if (userInfo) { // 判断是否存在值
+            let
+            userDay = new Date(JSON.parse(userInfo).timer).getDate(),
+            userHou = new Date(JSON.parse(userInfo).timer).getHours(),
+            userMin = new Date(JSON.parse(userInfo).timer).getMinutes();
+            // console.log(userDay , userMin);
+            timeDayDifference = nowToday - userDay ;  // 今天的日期减去储存用户日期
+            timeHouDifference = nowHours - userHou ;   // 今天的日期减去储存用户日期
+            timeMinDifference = nowMinutes - userMin ;   // 今天的日期减去储存用户分钟
+
+            // console.log(timeDayDifference , timeHouDifference , timeMinDifference);
+            // console.log(timeDayDifference >= 0 , timeHouDifference >= 0 , timeMinDifference > 2);
+            // console.log(timeDayDifference >= 0 && timeHouDifference >= 0 && timeMinDifference > 2);
+
+            if (timeDayDifference > 0 ) { // 判断日期是否己过期
+                window.localStorage.removeItem('userInfo'); // 清空本地用户信息内容！
+                console.log('本地用户信息超过一天已经清除！');
+                location.reload(); //信息清除后刷新页面
+            } else if (timeHouDifference > 0) { // 判断日期是否己过期
+                window.localStorage.removeItem('userInfo'); // 清空本地用户信息内容！
+                console.log('本地用户信息超过一小时已经清除！');
+                location.reload(); //信息清除后刷新页面
+            } else if (timeMinDifference > 30) { // 判断日期是否己过期
+                window.localStorage.removeItem('userInfo'); // 清空本地用户信息内容！
+                console.log('本地用户信息超过三十分钟已经清除！');
+                location.reload(); //信息清除后刷新页面
+            } else {
+                // this.$store.commit('USER_INFO',response.data.data); //用户信息赋值到 Vuex
+                // console.log(userInfo);
+                console.log('保留本地用户信息！');
+            }
+        } else {
+            // window.localStorage.removeItem('userInfo'); // 清空本地用户内容！
+            console.log('本地用户不存在！');
+        }
+
+    },
+
    //计算天数差的函数，通用  
     GetDateDiff(startTime, endTime, diffType) {
         //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
@@ -348,40 +397,6 @@ console.log(localKey);
         return result;
     },
 
-/*
-
-proList( self , parameter ) { // 更新会员信息（会员）
-    let post = ()=>{
-        return new Promise(resolve => {
-            self.$dataApi({
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                method: 'post',
-                url: '/api/product/getproList',
-                //url: '/mobile/index.php?m=console&c=view&a=view',
-                data: {
-                    showAll:0,
-                    userType : 2,  // 大类
-                    childType : 6, // 小类
-                }
-            }).then(response => {
-                let resData = response.data.data;
-                for (var i = 0; i < resData.length; i++) {
-                    resData[i].pimg = resData[i].pimg.split(',');
-                }
-                //console.log(resData);
-                resolve(resData);
-            })
-        });
-    }
-    let result = post();
-    return result;
-},
-
-
-*/
-
-
-
     proList(self , stateUserInfo , stateImgPath) { // 产品类别列表（分类）
         let params;
         if (stateUserInfo == null) {
@@ -390,14 +405,39 @@ proList( self , parameter ) { // 更新会员信息（会员）
                 childType:4,  // 小类
                 userType:1     // 大类
             };
-            console.log(stateUserInfo,'stateUserInfo值为空，使用默认值！')
+            // console.log('stateUserInfo值为空，使用默认值！')
         }else{
-            params = {
-                showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
-                childType:stateUserInfo.childType,  // 小类
-                userType:stateUserInfo.userType     // 大类
-            };
-            console.log(stateUserInfo,'stateUserInfo有值！')
+            // console.log('stateUserInfo有值！')
+            if (stateUserInfo.userType == 1 && stateUserInfo.childType == 0) { // 普通
+                params = {
+                    showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                    childType:4,  // 小类
+                    userType:1     // 大类
+                };
+            } else if (stateUserInfo.userType == 2 && stateUserInfo.childType == 0) { // 代理
+                params = {
+                    showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                    childType:6,  // 小类
+                    userType:2     // 大类
+                };
+            } else if (stateUserInfo.userType == 3 && stateUserInfo.childType == 0) { // 分公司
+                params = {
+                    showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                    childType:8,  // 小类
+                    userType:3     // 大类
+                };
+            } else {
+                params = {
+                    showAll:0,  // 0 按下面设置的会员等级显示，1 全部商品显示
+                    childType:stateUserInfo.childType,  // 小类
+                    userType:stateUserInfo.userType     // 大类
+                };
+            }
+        }
+        if (stateUserInfo) {
+            // console.log('会员身份为：'+stateUserInfo.userTypeName,params);
+        } else {
+            // console.log(params);
         }
         let post = ()=>{
             return new Promise(resolve => {
